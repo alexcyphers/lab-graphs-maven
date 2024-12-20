@@ -35,7 +35,7 @@ public class UndirectedGraphExperiment {
 
     List<Edge> prim = g.prims();
     pen.println("Prims: " + prim);
-
+    g.reachableFrom(pen, 0);
     // Remove a vertex
     pen.println("Removing b");
     g.removeVertex("b");
