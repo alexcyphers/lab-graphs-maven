@@ -1,5 +1,10 @@
 package edu.grinnell.csc207.util;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.PriorityQueue;
+
 /**
  * A simple implementation of undirected graphs.
  *
@@ -116,4 +121,66 @@ public class UndirectedGraph extends Graph {
     return num;
   } // safeVertexNumber(String)
 
+
+  /**
+   * Prims Algorithm MST.
+   *
+   * @return the minimum spanning tree.
+   */
+  public List<Edge> prims() {
+    List<Edge> primEdges = new ArrayList<>();
+    PriorityQueue<Edge> edgeQueue = new PriorityQueue<>((e1, e2) -> Integer.compare(e1.weight(), e2.weight()));
+    boolean[] marked = new boolean[this.numVertices];
+    int startVertex = 0;
+    Iterator<Integer> vertexFinder = vertices().iterator();
+
+    // Start at random vertex.
+    while (vertexFinder.hasNext()) {
+      startVertex = vertexFinder.next();
+      if (vertexNames[startVertex] != null) {
+        break;
+      } // if
+    } // while
+
+    if (vertexNames[startVertex] == null) {
+      throw new IllegalStateException("No vertices in graph.");
+    } // if
+
+    // Mark Vertex
+    marked[startVertex] = true;
+
+    Iterator<Edge> edges = edgesFrom(startVertex).iterator();
+    
+    while (edges.hasNext()) {
+      edgeQueue.add(edges.next());
+    } // while-loop
+
+    while (!edgeQueue.isEmpty() && primEdges.size() < this.numVertices - 1) {
+      Edge min = edgeQueue.poll();
+      int source = min.source();
+      int target = min.target();
+
+      if (marked[source] && marked[target]) {
+        continue;
+      } // if
+
+      primEdges.add(min);
+
+      int newVertex;
+      if (marked[source]) {
+        newVertex = target;
+      } else {
+        newVertex = source;
+      } // if/else
+      marked[newVertex] = true;
+
+      while (edges.hasNext()) {
+        Edge edge = edges.next();
+        if (!marked[edge.target()]) {
+          edgeQueue.add(edge);
+        } // if
+      } // while-loop
+    } // while-loop
+    return primEdges;
+  } // prims()
 } // class UndirectedGraph

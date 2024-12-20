@@ -1,9 +1,11 @@
 package edu.grinnell.csc207.experiments;
 
+import edu.grinnell.csc207.util.Edge;
 import edu.grinnell.csc207.util.Graph;
 import edu.grinnell.csc207.util.UndirectedGraph;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * A quick experiment with undirected graphs.
@@ -18,7 +20,7 @@ public class UndirectedGraphExperiment {
    */
   public static void main(String[] args) throws Exception {
     PrintWriter pen = new PrintWriter(System.out, true);
-    Graph g = new UndirectedGraph();
+    UndirectedGraph g = new UndirectedGraph();
 
     // Add a few edges
     g.addEdge("a", "b", 1);
@@ -30,6 +32,9 @@ public class UndirectedGraphExperiment {
     pen.println("Changing edge b-a");
     g.addEdge("b", "a", 4);
     g.dumpWithNames(pen);
+
+    List<Edge> prim = g.prims();
+    pen.println("Prims: " + prim);
 
     // Remove a vertex
     pen.println("Removing b");
