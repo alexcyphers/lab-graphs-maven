@@ -174,8 +174,9 @@ public class UndirectedGraph extends Graph {
       } // if/else
       marked[newVertex] = true;
 
-      while (edges.hasNext()) {
-        Edge edge = edges.next();
+      Iterator<Edge> newEdges = edgesFrom(newVertex).iterator();
+      while (newEdges.hasNext()) {
+        Edge edge = newEdges.next();
         if (!marked[edge.target()]) {
           edgeQueue.add(edge);
         } // if
