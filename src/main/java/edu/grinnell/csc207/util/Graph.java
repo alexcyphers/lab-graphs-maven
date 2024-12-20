@@ -986,9 +986,10 @@ public class Graph {
    */
   public void reachableFrom(PrintWriter pen, int start) {
     clearMarks();
-    ArrayList<Integer> reachable = new ArrayList<>();
-    ArrayList<Integer> toVisit = new ArrayList<>();
-    // Mark starting vertex
+    // 
+    LinkedList<Integer> reachable = new LinkedList<>();
+    LinkedList<Integer> toVisit = new LinkedList<>();
+    // Mark the starting node and add it to list.
     mark(start);
     toVisit.add(start);
 
@@ -997,21 +998,23 @@ public class Graph {
       reachable.add(curr);
       // get vertex edges
       Iterator<Edge> edges = edgesFrom(curr).iterator();
+
       while (edges.hasNext()) {
         Edge edge = edges.next();
         int adj = edge.target();
+        // Adds to the list if not marked and visits.
         if (!isMarked(adj)) {
           mark(adj);
           toVisit.add(adj);
         } // if
       } // while-loop
     } // while-loop
-    pen.println("Reachable:");
+    pen.println("Reachable: ");
     for (int i = 0; i < reachable.size(); i++) {
       if (i != reachable.size() - 1) {
-        pen.print(vertexName(reachable.get(i)) + " -> ");
+        pen.print(vertexNames[reachable.get(i)] + " -> ");
       } else {
-        pen.println(vertexName(reachable.get(i)));
+        pen.println(vertexNames[reachable.get(i)]);
       } // if/else
     } // for-loop
   } // reachableFrom(PrintWriter, start)
