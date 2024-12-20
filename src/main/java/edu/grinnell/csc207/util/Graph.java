@@ -1005,8 +1005,14 @@ public class Graph {
           toVisit.add(adj);
         } // if
       } // while-loop
-    } for (int i = 0; i < reachable.size(); i++) {
-        pen.println("-> " + vertexName(reachable.get(i)) + " ");
+    } // while-loop
+    pen.println("Reachable:");
+    for (int i = 0; i < reachable.size(); i++) {
+      if (i != reachable.size() - 1) {
+        pen.print(vertexName(reachable.get(i)) + " -> ");
+      } else {
+        pen.println(vertexName(reachable.get(i)));
+      } // if/else
     } // for-loop
   } // reachableFrom(PrintWriter, start)
 } // class Graph
